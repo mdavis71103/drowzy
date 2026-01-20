@@ -19,7 +19,7 @@ export function SleepScoreDisplay({ score, label='Sleep Score'}: SleepScoreDispl
                 style={{color: getScoreColor(score)}}>
                 {score}
             </div>
-            <div className="mt-1 soft-black text-sm">
+            <div className="mt-1 soft-white text-sm">
                 {label}
             </div>
         </div>
