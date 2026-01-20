@@ -1,9 +1,28 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:is(.dark *));
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+    /* Sleep App Color System */
+  --midnight-charcoal: #1F2933;
+  --soft-slate: #374151;
+  --fog-gray: #E5E7EB;
+  --pure-white: #FFFFFF;
+  
+  /* Accent & Semantic Colors */
+  --moon-blue: #4F7CAC;
+  --sleep-green: #6BBF9C;
+  --soft-amber: #F2B705;
+  --silver-mist: #C9CCD3;
+  
+  /* Data Visualization */
+  --sleep-score-line: #3B5C8A;
+  --rolling-average: #8B93C9;
+
+  --background: #1F2933;
+  --foreground: #FFFFFF;
 }
+
 
 @theme inline {
   --color-background: var(--background);
@@ -12,15 +31,31 @@
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+@layer base {
+    body {
+      @apply bg-background text-foreground;
+    }
+
+    h1 {
+      font-size: var(--text-2xl);
+      font-weight: bold;
+    }
+
+    h3 {
+      font-size: var(--text-lg);
+      font-weight: 600
+    }
 }
+
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: Inter, Arial, Helvetica, sans-serif;
 }
+
+.soft-black {
+  color: 'rgba(255, 255, 255, 0.75)';
+}
+
+
