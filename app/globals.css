@@ -43,7 +43,8 @@
 
     h3 {
       font-size: var(--text-lg);
-      font-weight: 600
+      font-weight: 600;
+      color: #FFFFFF;
     }
 }
 
@@ -54,8 +55,9 @@ body {
   font-family: Inter, Arial, Helvetica, sans-serif;
 }
 
-.soft-black {
-  color: 'rgba(255, 255, 255, 0.75)';
+.soft-white {
+  color: white;
+  opacity: 75;
 }
 
 
