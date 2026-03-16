@@ -7,8 +7,19 @@ import { Moon, Sun, Activity } from "lucide-react";
 export default function HomeScreen() {
   const currentDate = new Date();
   const { sleepData, loading } = useSleepData();
+  const lastNight = sleepData.find((night) => night.id === 1);
 
-  console.log(sleepData);
+  function formatTime(time: string) {
+    const [hours, minutes, seconds] = time.split(":");
+    const dateObj = new Date();
+    dateObj.setHours(Number(hours), Number(minutes), Number(seconds));
+
+    return new Intl.DateTimeFormat("en-US", {
+      hour: "numeric",
+      minute: "2-digit",
+      hour12: true, // Explicitly set to 12-hour format
+    }).format(dateObj);
+  }
 
   if (loading) {
     return <div>Loading...</div>;
@@ -21,7 +32,12 @@ export default function HomeScreen() {
         <div>
           <h1 className="">Good Morning</h1>
           <p className="mt-4 font-small opacity-75">
-            {currentDate.toDateString()}
+            {currentDate.toLocaleDateString("en-US", {
+              weekday: "long",
+              year: "numeric",
+              month: "long",
+              day: "numeric",
+            })}
           </p>
         </div>
         <PendulumIcon size={48} />
@@ -32,9 +48,9 @@ export default function HomeScreen() {
         <div className="flex items-center justify-between">
           <div>
             <h2 className="font-semibold color-white text-m ">Last Night</h2>
-            <p>{sleepData[0]?.total_sleep}</p>
+            <p>{lastNight?.total_sleep}</p>
           </div>
-          <h1>Sleep Score = 85</h1>
+          <h1>Sleep Score = {lastNight?.score}</h1>
         </div>
 
         <div className="mt-5 pt-5 border-t border-[rgba(255, 255, 255, 0.15)] grid grid-cols-3 gap-4">
@@ -43,7 +59,9 @@ export default function HomeScreen() {
               <Moon size={16} color="#8B93C9" strokeWidth={1.5} />
               <span className="opacity-75 color-black text-m">Bedtime</span>
             </div>
-            <div className="text-lg color-black font-semibold">10:45 PM</div>
+            <div className="text-lg color-black font-semibold">
+              {formatTime(lastNight?.sleep_time as string)}
+            </div>
           </div>
 
           <div>
@@ -58,7 +76,7 @@ export default function HomeScreen() {
                 color: "#FFFFFF",
               }}
             >
-              6:17 AM
+              {formatTime(lastNight?.wake_time as string)}
             </div>
           </div>
 
@@ -74,7 +92,7 @@ export default function HomeScreen() {
                 color: "#FFFFFF",
               }}
             >
-              Good
+              {lastNight?.quality}
             </div>
           </div>
         </div>
@@ -88,7 +106,7 @@ export default function HomeScreen() {
           <div>
             <div className="flex justify-between items-center mb-2 text-lg color-white">
               <span>Deep Sleep</span>
-              <span className="font-semibold">2h 15m</span>
+              <span className="font-semibold">{lastNight?.deep}</span>
             </div>
             <div className="w-full h-2 bg-background rounded-full overflow-hidden">
               <div className="h-full bg-[#3B5C8A] rounded-full w-3/10" />
@@ -98,7 +116,7 @@ export default function HomeScreen() {
           <div>
             <div className="flex justify-between items-center mb-2 text-lg color-white">
               <span>REM Sleep</span>
-              <span className="font-semibold">1h 455m</span>
+              <span className="font-semibold">{lastNight?.rem}</span>
             </div>
             <div className="w-full h-2 bg-background rounded-full overflow-hidden">
               <div className="h-full bg-[#8B93C9] rounded-full w-23/100" />
