@@ -1,3 +1,4 @@
+import { useSleepData } from "@/hooks/useSleepData";
 import { PendulumIcon } from "@/app/ui/components/PendulumIcon";
 import { SleepCard } from "@/app/ui/components/SleepCard";
 import { StatusIndicator } from "@/app/ui/components/StatusIndicator";
@@ -5,6 +6,13 @@ import { Moon, Sun, Activity } from "lucide-react";
 
 export default function HomeScreen() {
   const currentDate = new Date();
+  const { sleepData, loading } = useSleepData();
+
+  console.log(sleepData);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div className="p-5 space-y-5">
@@ -24,7 +32,7 @@ export default function HomeScreen() {
         <div className="flex items-center justify-between">
           <div>
             <h2 className="font-semibold color-white text-m ">Last Night</h2>
-            <p>7h 32m</p>
+            <p>{sleepData[0]?.total_sleep}</p>
           </div>
           <h1>Sleep Score = 85</h1>
         </div>
