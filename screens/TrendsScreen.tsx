@@ -1,31 +1,46 @@
 import { SleepCard } from "@/app/ui/components/SleepCard";
 import { SleepScoreDisplay } from "@/app/ui/components/SleepScoreDisplay";
 import { SleepChart } from "@/app/ui/components/SleepChart";
+import { useSleepData } from "@/hooks/useSleepData";
+import { SleepSession } from "@/types/sleep";
 
 // Mock data for the chart
-const sleepData = [
-  { date: "Mon", score: 85, average: 78 },
-  { date: "Tue", score: 72, average: 78 },
-  { date: "Wed", score: 90, average: 80 },
-  { date: "Thu", score: 68, average: 79 },
-  { date: "Fri", score: 82, average: 79 },
-  { date: "Sat", score: 88, average: 81 },
-  { date: "Sun", score: 92, average: 82 },
-];
 
 export default function TrendsScreen() {
+  const { sleepData, loading } = useSleepData();
+
+  function getAverageScore(days: number = 7) {
+    let weekAverage = 0;
+
+    const arr = sleepData.slice(0, days).reverse();
+
+    arr.map((day) => {
+      weekAverage += day.score;
+    });
+
+    return Math.round(weekAverage / days);
+  }
+
+  type SleepChartData = Pick<SleepSession, "date" | "score">;
+  const sleepChartData: SleepChartData[] = sleepData
+    .filter((session) => session.id < 8)
+    .map(({ date, score }) => ({ date, score }));
+
   return (
     <div className="flex flex-col gap-6 p-6">
       <h1>Sleep Trends</h1>
       <SleepCard>
         <h3 className="mb-4">7-Day Average</h3>
-        <SleepScoreDisplay score={82} label={"Weekly Average"} />
+        <SleepScoreDisplay
+          score={getAverageScore(7)}
+          label={"Weekly Average"}
+        />
       </SleepCard>
 
       <SleepCard>
         <h3 className="mb-2">Sleep Score Trend</h3>
         <p className="soft-white">Last 7 Days</p>
-        <SleepChart data={sleepData} />
+        <SleepChart data={sleepChartData} average={getAverageScore(7)} />
       </SleepCard>
 
       <SleepCard>

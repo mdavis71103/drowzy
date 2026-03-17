@@ -1,8 +1,11 @@
 import { PendulumIcon } from "@/app/ui/components/PendulumIcon";
 import { SleepCard } from "@/app/ui/components/SleepCard";
 import { SleepButton } from "@/app/ui/components/SleepButton";
+import { useSleepData } from "@/hooks/useSleepData";
 
 export default function ProfileScreen() {
+  const { sleepData, loading } = useSleepData();
+
   return (
     <div className="p-5 space-y-5">
       <h1 className="text-white mb-6 text-2xl font-semibold">Profile</h1>
@@ -24,7 +27,10 @@ export default function ProfileScreen() {
           </div>
           <div className="flex justify-between">
             <span className="soft-white">Total sleep tracked</span>
-            <span className="font-semibold text-white"> 38 nights</span>
+            <span className="font-semibold text-white">
+              {" "}
+              {sleepData.length} nights
+            </span>
           </div>
         </div>
       </SleepCard>
