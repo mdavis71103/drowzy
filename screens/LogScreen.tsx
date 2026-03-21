@@ -1,4 +1,5 @@
 import { BedDouble, Calendar } from "lucide-react";
+import { SleepCardContainer } from "@/app/ui/components/SleepCardContainer";
 import { SleepCard } from "@/app/ui/components/SleepCard";
 import { useSleepData } from "@/hooks/useSleepData";
 import { SleepSession } from "@/types/sleep";
@@ -20,40 +21,44 @@ export default function LogScreen() {
         <h3>Last 7 Nights</h3>
       </div>
 
-      {filteredSessions.map((session, index) => (
-        <SleepCard>
-          <div className="flex items-center justify-between mb-4">
-            <div className="flex items-center gap-3">
-              <Calendar size={20} color="#4F7CAC" strokeWidth={1.5} />
-              <span className="font-semibold color-white">{session.date}</span>
+      <SleepCardContainer staggerNumber={0.1}>
+        {filteredSessions.map((session, index) => (
+          <SleepCard key={session.date}>
+            <div className="flex items-center justify-between mb-4">
+              <div className="flex items-center gap-3">
+                <Calendar size={20} color="#4F7CAC" strokeWidth={1.5} />
+                <span className="font-semibold color-white">
+                  {session.date}
+                </span>
+              </div>
+              <span className="soft-white font-sm ">
+                {index === 0 ? (
+                  <span>Last Night</span>
+                ) : index === 1 ? (
+                  <span>Yesterday</span>
+                ) : (
+                  <span>{index} Nights ago</span>
+                )}
+              </span>
             </div>
-            <span className="soft-white font-sm ">
-              {index === 0 ? (
-                <span>Last Night</span>
-              ) : index === 1 ? (
-                <span>Yesterday</span>
-              ) : (
-                <span>{index} Nights ago</span>
-              )}
-            </span>
-          </div>
 
-          <div className="grid grid-cols-2 gap-4">
-            <div>
-              <span className="text-sm soft-white block mb-1">Duration</span>
-              <span className=" color-white font-semibold">
-                {session.total_sleep}
-              </span>
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <span className="text-sm soft-white block mb-1">Duration</span>
+                <span className=" color-white font-semibold">
+                  {session.total_sleep}
+                </span>
+              </div>
+              <div>
+                <span className="text-sm soft-white block mb-1">Score</span>
+                <span className="font-semibold color-[#6BBF9C]">
+                  {session.score}
+                </span>
+              </div>
             </div>
-            <div>
-              <span className="text-sm soft-white block mb-1">Score</span>
-              <span className="font-semibold color-[#6BBF9C]">
-                {session.score}
-              </span>
-            </div>
-          </div>
-        </SleepCard>
-      ))}
+          </SleepCard>
+        ))}
+      </SleepCardContainer>
 
       <button
         className="flex justify-center w-full bg-[#4F7CAC] p-4 mt-5 rounded-xl text-lg"

@@ -12,7 +12,7 @@ export default function ProfileScreen() {
 
       <SleepCard>
         <div className="flex items-center gap-4 mb-6">
-          <div className="w-16 h-16 rounded-full bg-[#4F7CAC] flex item-center justify-center">
+          <div className="w-16 h-16 rounded-full bg-[#4F7CAC] flex items-center justify-center">
             <span className="text-2xl font-semibold text-white">A</span>
           </div>
           <div>
