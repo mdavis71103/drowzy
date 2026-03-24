@@ -2,13 +2,14 @@ import { useSleepData } from "@/hooks/useSleepData";
 import { PendulumIcon } from "@/app/ui/components/PendulumIcon";
 import { SleepCardContainer } from "@/app/ui/components/SleepCardContainer";
 import { SleepCard } from "@/app/ui/components/SleepCard";
+import { SleepPercentBar } from "@/app/ui/components/SleepPercentBar";
 import { StatusIndicator } from "@/app/ui/components/StatusIndicator";
 import { Moon, Sun, Activity } from "lucide-react";
 
 export default function HomeScreen() {
   const currentDate = new Date();
-  const { sleepData, loading } = useSleepData();
-  const lastNight = sleepData.find((night) => night.id === 1);
+  let { sleepData, loading } = useSleepData();
+  let lastNight = sleepData.find((night) => night.id === 1);
 
   function formatTime(time: string) {
     const [hours, minutes, seconds] = time.split(":");
@@ -114,35 +115,25 @@ export default function HomeScreen() {
           <h3 className="mb-2 text-2xl">Sleep Stages</h3>
 
           <div className="space-y-3">
-            <div>
-              <div className="flex justify-between items-center mb-2 text-lg color-white">
-                <span>Deep Sleep</span>
-                <span className="font-semibold">{lastNight?.deep}</span>
-              </div>
-              <div className="w-full h-2 bg-background rounded-full overflow-hidden">
-                <div className="h-full bg-[#3B5C8A] rounded-full w-3/10" />
-              </div>
-            </div>
+            <SleepPercentBar
+              label="Deep Sleep"
+              stageTime={lastNight.deep}
+              totalTime={lastNight.total_sleep}
+            />
 
-            <div>
-              <div className="flex justify-between items-center mb-2 text-lg color-white">
-                <span>REM Sleep</span>
-                <span className="font-semibold">{lastNight?.rem}</span>
-              </div>
-              <div className="w-full h-2 bg-background rounded-full overflow-hidden">
-                <div className="h-full bg-[#8B93C9] rounded-full w-23/100" />
-              </div>
-            </div>
+            <SleepPercentBar
+              label="REM Sleep"
+              stageTime={lastNight.rem}
+              totalTime={lastNight.total_sleep}
+              color="#8B93C9"
+            />
 
-            <div>
-              <div className="flex justify-between items-center mb-2 text-lg color-white">
-                <span>Light Sleep</span>
-                <span className="font-semibold">3h 32m</span>
-              </div>
-              <div className="w-full h-2 bg-background rounded-full overflow-hidden">
-                <div className="h-full bg-[#4F7CAC] rounded-full w-47/100" />
-              </div>
-            </div>
+            <SleepPercentBar
+              label="Light Sleep"
+              stageTime={lastNight.light}
+              totalTime={lastNight.total_sleep}
+              color="#4F7CAC"
+            />
           </div>
         </SleepCard>
 

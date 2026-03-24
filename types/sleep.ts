@@ -3,10 +3,10 @@ export type SleepSession = {
   date: string;
   sleep_time: string;
   wake_time: string;
-  total_sleep: number;
-  deep: number;
-  rem: number;
-  light: number;
+  total_sleep: string;
+  deep: string;
+  rem: string;
+  light: string;
   hrv: number;
   rhr: number;
   score: number;
