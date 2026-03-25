@@ -1,3 +1,6 @@
+import { useState } from "react";
+import { Info } from "lucide-react";
+
 interface SleepPercentBarProps {
   label: string;
   stageTime: string;
@@ -38,12 +41,52 @@ export function SleepPercentBar({
 }: SleepPercentBarProps) {
   const percentage = calculateSleepPercentage(stageTime, totalTime);
 
-  console.log(`Label: ${label} StageTime:${stageTime} TotalTime:${totalTime} `);
+  const [isHovering, setIsHovering] = useState(false);
+  const handleMouseEnter = () => setIsHovering(true);
+  const handleMouseLeave = () => setIsHovering(false);
+
+  let infoContent;
+  switch (label) {
+    case "Deep Sleep":
+      infoContent =
+        "Deep sleep is your body's physical recovery stage. It helps repair muscles, strengthen your immune system, and restore energy for the next day.";
+      break;
+    case "Light Sleep":
+      infoContent =
+        "Light sleep helps your body wind down and transition between stages. It supports overall recovery and makes up the largest portion of your sleep.";
+      break;
+    case "REM Sleep":
+      infoContent =
+        "REM sleep supports your brain and memory. This is when dreaming happens, helping with learning, emotional balance, and mental recovery.";
+      break;
+  }
 
   return (
     <div>
       <div className="flex justify-between items-center mb-2 text-lg color-white">
-        <span>{label}</span>
+        <div className="flex items-center gap-1">
+          <span>{label}</span>
+          <div
+            className="relative"
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
+          >
+            <Info size={16} color="#8B93C9" strokeWidth={1.5} />
+            {isHovering && (
+              <div
+                className="absolute bottom-0 right-1/2 z-10 mt-1 p-2.5 text-white rounded-md opacity-90 text-wrap w-md h-200px"
+                style={{
+                  transform: "translateX(100%)",
+                  backgroundColor: "#333",
+                  borderRadius: "4px",
+                  boxShadow: "0 2px 5px rgba(0,0,0,0.2)",
+                }}
+              >
+                <span className="text-sm">{infoContent}</span>
+              </div>
+            )}
+          </div>
+        </div>
         <span className="font-semibold">{stageTime}</span>
       </div>
       <div className="w-full h-2 bg-background rounded-full overflow-hidden">
