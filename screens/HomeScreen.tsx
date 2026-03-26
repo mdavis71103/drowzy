@@ -2,7 +2,7 @@ import { useSleepData } from "@/hooks/useSleepData";
 import { PendulumIcon } from "@/app/ui/components/PendulumIcon";
 import { SleepCardContainer } from "@/app/ui/components/SleepCardContainer";
 import { SleepCard } from "@/app/ui/components/SleepCard";
-import { SleepPercentBar } from "@/app/ui/components/SleepPercentBar";
+import { SleepStageBar } from "@/app/ui/components/SleepStageBar";
 import { StatusIndicator } from "@/app/ui/components/StatusIndicator";
 import { Moon, Sun, Activity } from "lucide-react";
 
@@ -115,20 +115,20 @@ export default function HomeScreen() {
           <h3 className="mb-2 text-2xl">Sleep Stages</h3>
 
           <div className="space-y-3">
-            <SleepPercentBar
+            <SleepStageBar
               label="Deep Sleep"
               stageTime={lastNight.deep}
               totalTime={lastNight.total_sleep}
             />
 
-            <SleepPercentBar
+            <SleepStageBar
               label="REM Sleep"
               stageTime={lastNight.rem}
               totalTime={lastNight.total_sleep}
               color="#8B93C9"
             />
 
-            <SleepPercentBar
+            <SleepStageBar
               label="Light Sleep"
               stageTime={lastNight.light}
               totalTime={lastNight.total_sleep}
